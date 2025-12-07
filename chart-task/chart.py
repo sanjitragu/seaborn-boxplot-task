@@ -3,33 +3,27 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-# Make the output reproducible
 np.random.seed(42)
 
-# Create some example data
 data = pd.DataFrame({
     "category": np.repeat(["A", "B", "C"], 50),
     "value": np.concatenate([
-        np.random.normal(loc=10, scale=2, size=50),
-        np.random.normal(loc=15, scale=3, size=50),
-        np.random.normal(loc=20, scale=4, size=50),
+        np.random.normal(10, 2, 50),
+        np.random.normal(15, 3, 50),
+        np.random.normal(20, 4, 50),
     ])
 })
 
-# Create a figure that will be exactly 512x512 pixels
-# size (inches) * dpi = pixels
-# 5.12 inches * 100 dpi = 512 pixels
-fig, ax = plt.subplots(figsize=(5.12, 5.12), dpi=100)
+# 512px x 512px exactly
+fig = plt.figure(figsize=(5.12, 5.12), dpi=100)
+ax = plt.gca()
 
-# Create a Seaborn boxplot
 sns.boxplot(data=data, x="category", y="value", ax=ax)
 
-ax.set_title("Example Seaborn Boxplot")
+ax.set_title("Seaborn Boxplot Example")
 ax.set_xlabel("Category")
 ax.set_ylabel("Value")
 
-# Save the chart as exactly 512x512 PNG in the same folder
-fig.savefig("chart.png", dpi=100, bbox_inches="tight")
-
-plt.close(fig)
-
+# DO NOT use bbox_inches or tight_layout (they change size)
+plt.savefig("chart.png", dpi=100)
+plt.close()
